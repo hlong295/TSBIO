@@ -1,0 +1,25 @@
+- Goal (incl. success criteria):
+  - TSBIO baseline: keep UI + Pi SDK login stable; add server-side Root Admin gate aligned with DB schema (profiles.role/level).
+- Constraints/Assumptions:
+  - Do not change UI or Pi SDK flow.
+  - Supabase Admin access must be server-only (service role key via env).
+  - Root admin is identified by profiles.id (= auth.users.id) with role='root_admin' and level='super'.
+- Key decisions:
+  - Add requireRootAdmin() helper that checks DB only.
+  - Provide a minimal root-only admin API endpoint (/api/admin/ping) not wired to UI yet.
+- State:
+  - Added server-only supabase admin client helper + root admin guard; added admin ping route.
+- Done:
+  - lib/supabase/admin.ts
+  - lib/auth/require-root-admin.ts
+  - app/api/admin/ping/route.ts
+  - Added @supabase/supabase-js dependency
+- Now:
+  - Ready for Phase 2: /api/auth/pi sync DB + session, then wire admin panel calls.
+- Next:
+  - Implement /api/auth/pi (verify Pi token, upsert profiles/identities, set role for hlong295 based on pi_uid)
+  - Add admin APIs (system_rules CRUD, wallet mint/burn) guarded by requireRootAdmin.
+- Open questions (UNCONFIRMED if needed):
+  - Which mechanism will you use for server session (Supabase auth session, custom JWT, or httpOnly cookie)?
+- Working set (files/ids/commands):
+  - Root admin pi_uid (from DoWithPi): ce691dfb-749a-4074-a221-53360ca3c64a
