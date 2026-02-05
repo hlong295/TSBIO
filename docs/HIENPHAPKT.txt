@@ -1,0 +1,526 @@
+BẢN CHỐT CHÍNH THỨC
+TSBIO PLATFORM V1 → V3
+(CORE + ECOSYSTEM + MOBILE + TOKEN)
+I. MỤC TIÊU CỐT LÕI
+
+TSBIO là nền tảng hệ sinh thái nông nghiệp công nghệ sinh học số hoá, tích hợp:
+
+Phân phối sản phẩm lõi TSBIO
+
+Kết nối nông dân – trang trại – chuyên gia
+
+Bảo hộ đầu ra nông sản
+
+Chia sẻ tri thức – case thực tế
+
+Thanh toán đa kênh (VND + Pi)
+
+Token tiện ích TSB
+
+Quản trị – báo cáo – kiểm soát dòng tiền
+
+Định hướng:
+
+“TSBIO = Platform nông nghiệp số, không phải app bán hàng”.
+
+II. CHIẾN LƯỢC TRIỂN KHAI ĐA NỀN TẢNG
+2.1 Mô hình tổng thể
+
+Áp dụng mô hình:
+
+✅ SHELL APP + REMOTE WEB CORE
+👉 Hybrid Web Container App
+
+Kiến trúc
+GitHub → Vercel (Next.js Core)
+            ↓
+         tsbio.vn
+            ↓
+ Web / Pi Browser / Mobile WebView
+            ↓
+     iOS / Android Shell App
+
+Nguyên tắc
+
+Toàn bộ logic nằm ở Web Core
+
+Mobile chỉ là vỏ WebView
+
+Sửa GitHub → Vercel deploy → update toàn hệ thống
+
+Không rebuild app mobile khi sửa tính năng
+
+2.2 Kênh vận hành chính
+Kênh	Mục đích
+Web2 (tsbio.vn)	Desktop + Mobile browser
+Pi Browser/App	Pi login + Pi payment
+iOS / Android	App người dùng
+
+Tất cả dùng chung API + DB.
+
+III. HỆ THỐNG TRANG CHÍNH
+1️⃣ /tsbio – Store Chính
+
+Bán sản phẩm lõi
+
+VND + Pi
+
+Admin only
+
+2️⃣ /market – Chợ Nông Sản
+
+Farm/member bán
+
+Duyệt
+
+Badge Certified
+
+3️⃣ /cases – Cứu Vườn
+
+Before/After
+
+Quy trình
+
+Video
+
+4️⃣ /news – Tin Tức
+
+Kiến thức
+
+Thị trường
+
+5️⃣ /farms/[id] – Trang Nhà Vườn
+
+Trang trung tâm hệ sinh thái:
+
+Profile farm
+
+Nhật ký
+
+Media
+
+Gian hàng
+
+Uy tín
+
+TSB
+
+Kết nối expert
+
+IV. HỆ THỐNG PROFILE – IDENTITY – KYC
+4.1 Master Profile
+
+Mỗi người = 1 hồ sơ trung tâm.
+
+A. Cơ bản
+
+Avatar
+
+Tên thật
+
+Username
+
+DOB
+
+Giới tính
+
+B. Liên hệ
+
+Phone verified
+
+Email verified
+
+Địa chỉ
+
+C. Pháp lý (KYC)
+
+CCCD (2 mặt)
+
+MST
+
+ĐKKD/HTX
+
+Đại diện PL
+
+D. Nghề nghiệp
+
+Member / Farm / Expert
+
+Kinh nghiệm
+
+Chứng chỉ
+
+4.2 Multi-Identity
+
+Pi identity
+
+Email identity
+
+Gắn vào 1 profile duy nhất
+
+V. PHÂN LOẠI USER
+Thành viên
+
+Thường
+
+Uy tín
+
+Chuyên gia
+
+Nhà vườn
+
+Thường
+
+Uy tín
+
+Mẫu
+
+Gắn quyền theo cấp.
+
+VI. HỆ THỐNG REPUTATION
+
+Điểm tổng:
+
+Score = Activity*w1 + Trade*w2 + Verify*w3
+
+
+Admin cấu hình.
+
+Dùng để:
+
+Xếp hạng
+
+Mở quyền
+
+Quy đổi TSB
+
+VII. TOKEN TSB & WALLET SYSTEM
+7.1 Ví TSB
+
+Mỗi profile có 1 ví.
+
+Hiển thị:
+
+Balance
+
+Locked
+
+History
+
+7.2 Chuyển TSB
+
+Admin set:
+
+Ai được chuyển
+
+Phí
+
+Hạn mức
+
+Cooldown
+
+Server-only.
+
+7.3 Admin Token Control
+
+Admin có quyền:
+
+Mint
+
+Burn
+
+Lock
+
+Unlock
+
+Reset
+
+Set rule
+
+Tất cả có log.
+
+7.4 Ledger Architecture
+tsb_wallets
+   |
+   +-- tsb_transactions
+
+
+Không update balance trực tiếp.
+
+VIII. FEE ENGINE (THU PHÍ BẰNG TSB)
+8.1 Các hành vi thu phí
+Hành động	Thu phí
+Đăng sản phẩm	✔
+Đăng bài	✔
+Comment	✔
+Review	✔
+Diary	✔
+Boost	✔✔
+8.2 Admin cấu hình phí
+
+Theo role
+
+Theo level
+
+Theo farm level
+
+8.3 Fee Flow
+Check rule → Check balance → Deduct → Log → Allow
+
+IX. THANH TOÁN & TÀI CHÍNH
+9.1 VND
+
+Bank
+
+MoMo
+
+COD
+
+9.2 Pi
+
+Mainnet → ví admin
+
+Sau: multisig
+
+9.3 System Wallets
+VND
+
+Revenue
+
+VAT
+
+Service
+
+PI
+
+Revenue
+
+VAT
+
+Service
+
+Tự động chia %.
+
+X. ADMIN & GOVERNANCE
+10.1 Root Admin
+
+Pi: hlong295
+
+Full quyền
+
+10.2 Admin Panel
+
+Module:
+
+Users/KYC
+
+Farms
+
+Experts
+
+Products
+
+Orders
+
+Token
+
+Wallets
+
+Fees
+
+Logs
+
+Config
+
+XI. TRANG SẢN PHẨM CHI TIẾT
+
+Chung layout
+
+Phân biệt bằng badge
+
+Seller type
+
+Certification
+
+XII. AUTHENTICATION
+Pi Login
+
+Pi SDK
+
+Auto verified
+
+Email Login
+
+Supabase Auth
+
+Verify bắt buộc
+
+XIII. NGUYÊN TẮC BẮT BUỘC
+Kỹ thuật
+
+Không sửa UI
+
+Không client access tài chính
+
+Server verify
+
+Ledger only
+
+Vận hành
+
+Audit log
+
+Backup
+
+Soft delete
+
+Versioning
+
+XIV. ROUTE MAP
+Route	Mục đích
+/tsbio	Store
+/market	Market
+/cases	Cases
+/news	News
+/farms/[id]	Farm
+/account	Profile
+/wallet/tsb	TSB
+/admin	Admin
+/orders	Orders
+/experts	Experts
+/kyc	KYC
+XV. LỘ TRÌNH V1 → V3
+V1 (0–6 tháng)
+
+Auth
+
+Profile + KYC
+
+Store + Market
+
+Payment
+
+Wallet + Fee
+
+V2 (6–12 tháng)
+
+Reputation
+
+Token Economy
+
+Farm Showcase
+
+Experts
+
+V3 (12–24 tháng)
+
+Multisig
+
+AI Advisor
+
+Analytics
+
+Open API
+
+XVI. TSBIO_CORE_ARCHITECTURE.md (KIM CHỈ NAM)
+16.1 7 ENGINES
+1. Identity Engine
+
+profiles, identities, roles, permissions, KYC
+
+2. Commerce Engine
+
+products, orders, payments, fulfillments
+
+3. Token Engine
+
+wallets, transactions, fees, limits
+
+4. Reputation Engine
+
+scores, weights, history
+
+5. Farm Engine
+
+farms, diaries, media, metrics
+
+6. Governance Engine
+
+workflows, approvals, inspections
+
+7. Platform Engine
+
+events, notifications, configs, extensions
+
+16.2 API Boundaries
+Layer	Chức năng
+/api/auth	Identity
+/api/products	Catalog
+/api/orders	Orders
+/api/payments	Payment
+/api/tsb	Token
+/api/admin	Admin
+16.3 DB Boundaries
+
+Public: products(active), articles(pub), farms(view)
+
+Private: KYC, wallets, orders, logs
+
+16.4 Rule System
+
+Tất cả rule nằm DB:
+
+Fees
+
+Transfer
+
+Reputation
+
+Wallet split
+
+Feature flags
+
+Channel flags
+
+Không hardcode.
+
+XVII. NGUYÊN TẮC “KHÔNG PHẢI ĐẬP LẠI”
+
+UI = view layer
+
+Logic = API
+
+Rule = DB
+
+Money = Ledger
+
+Action = Event
+
+Delete = Soft
+
+Extend = Register
+
+XVIII. KẾT LUẬN CUỐI
+
+Nếu anh triển khai đúng bản này:
+
+👉 TSBIO sẽ là:
+
+Marketplace
+
+Community
+
+Fintech-lite
+
+Knowledge Hub
+
+Mobile-ready Platform
+
+Chạy ổn định trên:
+
+✅ Web
+✅ Pi Network
+✅ iOS
+✅ Android
+
+Không bị lock-in. Không phải rewrite.
