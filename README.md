@@ -1,2 +1,0 @@
-# TSBIO
-TSBIO Core Platform
