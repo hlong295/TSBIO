@@ -6,7 +6,9 @@ import { ensureStorageBucket } from "@/lib/media/ensure-bucket";
 const BUCKET = "media";
 
 export async function GET(req: Request) {
-  const guard = await requireAdminRole(req, ["editor"]);
+  // Media library is used across multiple admin modules (products, CMS...).
+  // Allow all admin-capable roles. Root always passes.
+  const guard = await requireAdminRole(req, ["admin", "editor", "provider", "approval"]);
   if (!guard.ok) {
     return NextResponse.json({ error: guard.error, detail: guard.detail }, { status: guard.status });
   }

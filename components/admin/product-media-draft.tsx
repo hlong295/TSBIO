@@ -186,7 +186,9 @@ function AdminMediaPickerInline(props: {
       const url = new URL("/api/admin/media/list", window.location.origin);
       url.searchParams.set("prefix", prefix || "uploads/");
       url.searchParams.set("limit", "100");
-      const res = await fetch(url.toString(), { headers });
+      // Use fetchWithAuth to guarantee Authorization header exists.
+      // Some environments may drop/omit headers if we rely on plain fetch.
+      const res = await fetchWithAuth(url.toString(), { headers });
       const json = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(`${json?.error || "LIST_FAILED"}${json?.detail ? `: ${json.detail}` : ""}`);
       setItems(Array.isArray(json?.items) ? json.items : []);
