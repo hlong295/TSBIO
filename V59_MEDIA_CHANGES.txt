@@ -1,0 +1,5 @@
+
+V59 MEDIA ADMIN
+- Added Edit/Delete buttons (UI hook)
+- API routes: /api/admin/media/delete, update
+- Permission: admin only
